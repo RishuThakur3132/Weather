@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Header from "./Components/Header.jsx";
+import Footer from "./Components/Footer.jsx";
 
 function App() {
-  const [weather, setWeather] = useState([]);
+  const [weatherData, setWeatherData] = useState([]);
 
   const API_KEY = "5680957f9d849af58cfd5aa64bd7800e";
 
   const cities = [
-    "Shimla",
+    "Panipat",
     "Delhi",
     "Mumbai",
     "Bangalore",
     "Chandigarh",
     "Jaipur",
     "Kolkata",
+    "Karnataka",
+    "Kerala",
     "Chennai",
     "Hyderabad",
     "Pune",
-    "Manali",
-    "Panipat",
+    "Punjab",
+    "Himachal Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
   ];
 
   useEffect(() => {
-    async function getWeather() {
+    const fetchWeather = async () => {
       try {
         const result = await Promise.all(
           cities.map(async (city) => {
@@ -32,47 +42,81 @@ function App() {
 
             const data = await response.json();
 
-            console.log(data);
-
             return data;
           })
         );
 
-        setWeather(result);
-      } catch (error) {
-        console.log("Error:", error);
+        setWeatherData(result);
+      } catch (err) {
+        console.log(err.message);
       }
-    }
+    };
 
-    getWeather();
+    fetchWeather();
   }, []);
 
   return (
-    <div className="weather-container">
-      <h1>Weather Application</h1>
 
-      <div className="weather-grid">
-        {weather.map((city) => (
-          <div className="weather-card" key={city.id}>
-            <h2>{city.name}</h2>
+    <>
+    <Header />
 
-            <h3>{Math.round(city.main.temp)}°C</h3>
+    <div className="weather-page">
+      <h1>Weather Data</h1>
 
-            <p className="condition">
-              {city.weather[0].description}
-            </p>
+      <div className="weather-container">
+        {weatherData.map((weather) => (
+          <div className="weather-card" key={weather.id}>
+            <h2>{weather.name}</h2>
 
-            <p>💧 Humidity: {city.main.humidity}%</p>
+            <div className="weather-info">
+              <div className="weather-item">
+                <span>Temperature</span>
+                <strong>
+                  {Math.round(weather.main.temp)}°C
+                </strong>
+              </div>
 
-            <p>🌡️ Feels Like: {Math.round(city.main.feels_like)}°C</p>
+              <div className="weather-item">
+                <span>Feels Like</span>
+                <strong>
+                  {Math.round(weather.main.feels_like)}°C
+                </strong>
+              </div>
 
-            <p>💨 Wind: {city.wind.speed} m/s</p>
+              <div className="weather-item">
+                <span>Humidity</span>
+                <strong>
+                  {weather.main.humidity}%
+                </strong>
+              </div>
 
-            <p>⏱️ Pressure: {city.main.pressure} hPa</p>
+              <div className="weather-item">
+                <span>Pressure</span>
+                <strong>
+                  {weather.main.pressure} hPa
+                </strong>
+              </div>
+
+              <div className="weather-item">
+                <span>Wind Speed</span>
+                <strong>
+                  {weather.wind.speed} m/s
+                </strong>
+              </div>
+
+              <div className="weather-item">
+                <span>Condition</span>
+                <strong>
+                  {weather.weather[0].description}
+                </strong>
+              </div>
+            </div>
           </div>
         ))}
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 
