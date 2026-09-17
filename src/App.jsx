@@ -23,6 +23,7 @@ function App() {
     "Pune",
     "Punjab",
     "Himachal Pradesh",
+    "Haryana",
     "Maharashtra",
     "Manipur",
     "Meghalaya",

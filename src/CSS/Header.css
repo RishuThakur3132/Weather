@@ -34,7 +34,32 @@
 }
 
 .nav a:hover {
-  color: #dff1ff;
+  color: #fbfcfd;
+}
+.search-box {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.search-box input {
+  width: 50%;
+  height: 40px;
+  padding: 0 25px;
+  font-size: 20px;
+  border: 1px solid #d9dfe8;
+  border-radius: 12px;
+  background: white;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-box input::placeholder {
+  color: #111;
+  opacity: 1;
+}
+
+.search-box input:focus {
+  border-color: #777;
 }
 
 /* Mobile */
